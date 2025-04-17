@@ -34,7 +34,7 @@ ___
 
 1) Клонирование репозитория:
 ```sh
-git https://github.com/raydqver/online-store-django.git
+git https://github.com/XXSnape/online-store-django.git
 ```
 
 2) Создание виртуального окружения и установка зависимостей для корректной работы проекта:
