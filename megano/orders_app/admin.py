@@ -7,6 +7,15 @@ class OrderAdmin(admin.ModelAdmin):
     """
     Класс для представления заказа в административной панели.
     """
-    list_display = ('id', 'user_profile', 'deliveryType', 'paymentType', 'totalCost',
-                    'status', 'city', 'address')
-    ordering = ('pk',)
+
+    list_display = (
+        "id",
+        "user_profile",
+        "deliveryType",
+        "paymentType",
+        "totalCost",
+        "status",
+        "city",
+        "address",
+    )
+    ordering = ("pk",)

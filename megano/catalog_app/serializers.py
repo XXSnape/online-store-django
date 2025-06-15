@@ -6,7 +6,9 @@ class CategoryImageMixin(serializers.Serializer):
     """
     Миксин с картинкой категории
     """
+
     image = serializers.SerializerMethodField()
+
     def get_image(self, instance: Category) -> dict[str, str] | dict:
         """
         Метод сериализатора. Возвращает изображение категории.
@@ -15,7 +17,7 @@ class CategoryImageMixin(serializers.Serializer):
         """
         try:
             image = instance.category_img.all()[0]
-            return {'src': image.src(), 'alt': image.alt()}
+            return {"src": image.src(), "alt": image.alt()}
         except IndexError:
             return {}
 
@@ -27,16 +29,16 @@ class SubCategorySerializer(CategoryImageMixin, serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'title', 'image')
-
+        fields = ("id", "title", "image")
 
 
 class CategorySerializer(CategoryImageMixin, serializers.ModelSerializer):
     """
     Класс сериализатор. Основан на модели категории.
     """
+
     subcategories = SubCategorySerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Category
-        fields = ('id', 'title', 'image', 'subcategories')
+        fields = ("id", "title", "image", "subcategories")

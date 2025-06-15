@@ -8,6 +8,7 @@ class OrderSerializer(serializers.ModelSerializer):
     """
     Сериализатор заказа.
     """
+
     createdAt = serializers.SerializerMethodField()
     orderId = serializers.SerializerMethodField()
     fullName = serializers.StringRelatedField()
@@ -17,9 +18,21 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'createdAt', 'fullName', 'email',
-                  'phone', 'deliveryType', 'paymentType', 'totalCost',
-                  'status', 'city', 'address', 'products', 'orderId')
+        fields = (
+            "id",
+            "createdAt",
+            "fullName",
+            "email",
+            "phone",
+            "deliveryType",
+            "paymentType",
+            "totalCost",
+            "status",
+            "city",
+            "address",
+            "products",
+            "orderId",
+        )
 
     def get_createdAt(self, instance: Order) -> str:
         """
@@ -31,7 +44,3 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_orderId(self, instance: Order) -> Order.pk:
         return instance.pk
-
-
-
-

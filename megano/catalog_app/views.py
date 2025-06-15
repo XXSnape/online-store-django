@@ -11,6 +11,7 @@ from .utils import main_filter
 
 class CategoryListApiView(ListAPIView):
     """Класс API-view. Предоставляет информацию о категориях."""
+
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
@@ -23,13 +24,16 @@ class CategoryListApiView(ListAPIView):
 
 class BannersListApiView(ListAPIView):
     """Класс API-view. Предоставляет информацию о товарах в избранных категориях."""
-    queryset: Product = Product.objects.prefetch_related(
-        'review',
-        'product_img',
-        'tags',
-    ).select_related(
-        'category'
-    ).filter(category__main=True)
+
+    queryset: Product = (
+        Product.objects.prefetch_related(
+            "review",
+            "product_img",
+            "tags",
+        )
+        .select_related("category")
+        .filter(category__main=True)
+    )
     serializer_class = FewerInfoProductSerializer
 
     def get(self, request: Request, *args, **kwargs) -> Response:
@@ -41,14 +45,9 @@ class BannersListApiView(ListAPIView):
 
 class CatalogApiView(APIView):
     """Класс API-view. Позволяет отфильтровать товары."""
+
     def get(self, request: Request) -> Response:
         """Метод - get. Формирует ответ для пользователя"""
-        return Response({'items': FewerInfoProductSerializer(main_filter(request), many=True).data})
-
-
-
-
-
-
-
-
+        return Response(
+            {"items": FewerInfoProductSerializer(main_filter(request), many=True).data}
+        )

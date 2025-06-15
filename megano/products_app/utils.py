@@ -12,12 +12,15 @@ def setup_average_rating(product_pk: Product.pk) -> int:
     :param product_pk: идентификатор модели Product
     :return: средняя оценка товара, основывается на отзывах пользователей.
     """
-    return statistics.mean(review.rate
-                           for review in Review.objects.only('rate').filter(product_id=product_pk)
-                           )
+    return statistics.mean(
+        review.rate
+        for review in Review.objects.only("rate").filter(product_id=product_pk)
+    )
 
 
-def get_valid_review_data(request_data: dict, user: ProfileUser, product: Product) -> dict:
+def get_valid_review_data(
+    request_data: dict, user: ProfileUser, product: Product
+) -> dict:
     """
     Обрабатывает данные об отзыве.
     :param request_data: Словарь с данными об отзыве.
@@ -26,12 +29,12 @@ def get_valid_review_data(request_data: dict, user: ProfileUser, product: Produc
     :return: Словарь с отфильтрованными данными об отзыве.
     """
     return {
-        'date': datetime.now().strftime('%d-%m-%Y %H:%M'),
-        'author': user.fullName,
-        'text': request_data.get('text', ''),
-        'rate': request_data.get('rate', 1),
-        'email': user.email,
-        'product': product.pk,
+        "date": datetime.now().strftime("%d-%m-%Y %H:%M"),
+        "author": user.fullName,
+        "text": request_data.get("text", ""),
+        "rate": request_data.get("rate", 1),
+        "email": user.email,
+        "product": product.pk,
     }
 
 
@@ -42,12 +45,14 @@ def create_review(valid_data: dict, product: Product):
     :param product: Экземпляр модели Product
     :return: Создает запись с отзывом в базу данных
     """
-    Review.objects.create(author=valid_data.get('author', 'Неизвестно'),
-                          email=valid_data.get('email', 'unknow@mai.ru'),
-                          text=valid_data.get('text', ''),
-                          rate=valid_data.get('rate', 1),
-                          date=valid_data.get('date'),
-                          product_id=product.pk)
+    Review.objects.create(
+        author=valid_data.get("author", "Неизвестно"),
+        email=valid_data.get("email", "unknow@mai.ru"),
+        text=valid_data.get("text", ""),
+        rate=valid_data.get("rate", 1),
+        date=valid_data.get("date"),
+        product_id=product.pk,
+    )
 
 
 def user_review_exists(email: str, product_id: Product.pk):
@@ -58,5 +63,6 @@ def user_review_exists(email: str, product_id: Product.pk):
     :return: Возвращает ошибку, если пользователь оставлял отзыв на товар.
     """
     if Review.objects.filter(email=email, product_id=product_id).exists():
-        raise ValidationError('Комментарий на товар уже был оставлен этим пользователем.')
-
+        raise ValidationError(
+            "Комментарий на товар уже был оставлен этим пользователем."
+        )

@@ -8,23 +8,27 @@ class TagSerializer(serializers.ModelSerializer):
     """
     Класс сериализатор. Основан на модели тегов.
     """
+
     class Meta:
         model = Tag
-        exclude = ('product',)
+        exclude = ("product",)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
     """
     Класс сериализатор. Основан на модели отзывов.
     """
+
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = "__all__"
+
 
 class ProductInfoMixin(serializers.Serializer):
     """
     Миксин с информацией о товаре
     """
+
     tags = TagSerializer(many=True, required=False)
     images = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
@@ -35,7 +39,10 @@ class ProductInfoMixin(serializers.Serializer):
         :param instance: экземпляр модели Product
         :return: список из словарей, в которых содержится информация об изображениях товара.
         """
-        return [{'src': image.src(), 'alt': image.alt()} for image in instance.product_img.all()]
+        return [
+            {"src": image.src(), "alt": image.alt()}
+            for image in instance.product_img.all()
+        ]
 
     def get_price(self, instance: Product):
         """
@@ -49,19 +56,32 @@ class ProductInfoMixin(serializers.Serializer):
             return instance.price
 
 
-
 class ProductDetailSerializer(ProductInfoMixin, serializers.ModelSerializer):
     """
     Класс сериализатор. Основан на модели товара. Предоставляет полную информацию о товаре.
     """
+
     reviews = serializers.SerializerMethodField()
     specifications = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ('id', 'category', 'price', 'count', 'date', 'title',
-                  'description', 'fullDescription', 'freeDelivery', 'images', 'tags', 'reviews',
-                  'specifications', 'rating')
+        fields = (
+            "id",
+            "category",
+            "price",
+            "count",
+            "date",
+            "title",
+            "description",
+            "fullDescription",
+            "freeDelivery",
+            "images",
+            "tags",
+            "reviews",
+            "specifications",
+            "rating",
+        )
 
     def get_reviews(self, instance: Product) -> list[dict]:
         """
@@ -69,10 +89,16 @@ class ProductDetailSerializer(ProductInfoMixin, serializers.ModelSerializer):
         :param instance: экземпляр модели Product
         :return: список из словарей, в которых содержится информация об отзыве
         """
-        return [{'author': review.author, 'email': review.email,
-                 'text': review.text, 'rate': review.rate,
-                 'date': datetime.strftime(review.date, '%d-%m-%Y %H:%M')}
-                for review in instance.review.all()]
+        return [
+            {
+                "author": review.author,
+                "email": review.email,
+                "text": review.text,
+                "rate": review.rate,
+                "date": datetime.strftime(review.date, "%d-%m-%Y %H:%M"),
+            }
+            for review in instance.review.all()
+        ]
 
     def get_specifications(self, instance: Product) -> list[dict]:
         """
@@ -80,23 +106,36 @@ class ProductDetailSerializer(ProductInfoMixin, serializers.ModelSerializer):
         :param instance: экземпляр модели Product
         :return: список из словарей, в которых содержится информация о технических характеристиках.
         """
-        return [{'name': specification.name, 'value': specification.value}
-                for specification in instance.specification.all()]
-
+        return [
+            {"name": specification.name, "value": specification.value}
+            for specification in instance.specification.all()
+        ]
 
 
 class FewerInfoProductSerializer(ProductInfoMixin, serializers.ModelSerializer):
     """
     Класс сериализатор. Основан на модели товара. Предоставляет неполную информацию о товаре.
     """
+
     reviews = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
 
-
     class Meta:
         model = Product
-        fields = ('id', 'category', 'price', 'count', 'date', 'title',
-                  'description', 'freeDelivery', 'images', 'tags', 'reviews', 'rating')
+        fields = (
+            "id",
+            "category",
+            "price",
+            "count",
+            "date",
+            "title",
+            "description",
+            "freeDelivery",
+            "images",
+            "tags",
+            "reviews",
+            "rating",
+        )
 
     def get_reviews(self, instance: Product) -> int:
         """
@@ -108,10 +147,10 @@ class FewerInfoProductSerializer(ProductInfoMixin, serializers.ModelSerializer):
 
     def get_price(self, instance: Product):
         """
-         Метод сериализатора. Возвращает цену товара.
-         :param instance: экземпляр модели Product
-         :return: цена товара. Если есть акция на товар, возвращается цена по скидке.
-         """
+        Метод сериализатора. Возвращает цену товара.
+        :param instance: экземпляр модели Product
+        :return: цена товара. Если есть акция на товар, возвращается цена по скидке.
+        """
         try:
             return instance.sale.salePrice
         except ObjectDoesNotExist:
@@ -122,18 +161,17 @@ class SaleProductSerializer(serializers.ModelSerializer):
     """
     Класс сериализатор. Основан на модели товаров по акции. Предоставляет информацию об акции.
     """
+
     id = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
-    dateFrom = serializers.DateField(format='%d-%m')
-    dateTo = serializers.DateField(format='%d-%m')
+    dateFrom = serializers.DateField(format="%d-%m")
+    dateTo = serializers.DateField(format="%d-%m")
     price = serializers.StringRelatedField()
     title = serializers.StringRelatedField()
 
     class Meta:
         model = SaleProduct
-        fields = ('id', 'price', 'salePrice',
-                  'dateFrom', 'dateTo', 'title',
-                  'images')
+        fields = ("id", "price", "salePrice", "dateFrom", "dateTo", "title", "images")
 
     def get_id(self, instance: SaleProduct) -> Product.pk:
         """
@@ -149,15 +187,7 @@ class SaleProductSerializer(serializers.ModelSerializer):
         :param instance: экземпляр модели Product
         :return: список из словарей, в которых содержится информация об изображениях товара.
         """
-        return [{'src': image.src(), 'alt': image.alt()} for image in instance.product.product_img.all()]
-
-
-
-
-
-
-
-
-
-
-
+        return [
+            {"src": image.src(), "alt": image.alt()}
+            for image in instance.product.product_img.all()
+        ]

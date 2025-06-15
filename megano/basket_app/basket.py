@@ -9,6 +9,7 @@ from rest_framework.request import Request
 
 class Basket:
     """Корзина для товаров."""
+
     def __init__(self, request: Request):
         """
         Инициализация корзины. Установка сессии.
@@ -36,11 +37,11 @@ class Basket:
             price = product.price
         if product_id not in self.cart:
             self.cart[product_id] = {
-                'count': count,
-                'price': str(price),
+                "count": count,
+                "price": str(price),
             }
         else:
-            self.cart[product_id]['count'] += count
+            self.cart[product_id]["count"] += count
         self.save()
 
     def delete(self, product: Product, count: int = 1):
@@ -51,10 +52,10 @@ class Basket:
         :return: Удаляет товар из корзины.
         """
         product_id = str(product.pk)
-        if count >= self.cart[product_id]['count']:
+        if count >= self.cart[product_id]["count"]:
             del self.cart[product_id]
         else:
-            self.cart[product_id]['count'] -= count
+            self.cart[product_id]["count"] -= count
 
         self.save()
 
@@ -76,8 +77,10 @@ class Basket:
         Метод, возвращающий полную стоимость всех товаров в корзине.
         :return: Полная стоимость.
         """
-        return sum(data_many.get('count', 0) * Decimal(data_many.get('price', 0))
-                   for data_many in self.cart.values())
+        return sum(
+            data_many.get("count", 0) * Decimal(data_many.get("price", 0))
+            for data_many in self.cart.values()
+        )
 
     def get_count_product_in_basket(self, product_pk) -> int:
         """
@@ -86,7 +89,7 @@ class Basket:
         :return: Количество товара.
         """
         product_id = str(product_pk)
-        return self.cart.get(product_id, {}).get('count', 0)
+        return self.cart.get(product_id, {}).get("count", 0)
 
     def get_price_product_in_basket(self, product_pk) -> Decimal:
         """
@@ -95,6 +98,4 @@ class Basket:
         :return: Цена товара.
         """
         product_id = str(product_pk)
-        return Decimal(self.cart.get(product_id, {}).get('price', 0))
-
-
+        return Decimal(self.cart.get(product_id, {}).get("price", 0))

@@ -10,100 +10,249 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('catalog_app', '0001_initial'),
+        ("catalog_app", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=128, verbose_name='Название')),
-                ('price', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Цена')),
-                ('count', models.IntegerField(verbose_name='Количество')),
-                ('date', models.DateField(auto_now_add=True, verbose_name='Дата создания')),
-                ('description', models.CharField(blank=True, max_length=64, verbose_name='Краткое описание')),
-                ('fullDescription', models.TextField(blank=True, verbose_name='Полное описание')),
-                ('freeDelivery', models.BooleanField(default=False, verbose_name='Бесплатная доставка')),
-                ('rating', models.IntegerField(verbose_name='Количество звёзд')),
-                ('category', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='products', to='catalog_app.category', verbose_name='Категория')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=128, verbose_name="Название")),
+                (
+                    "price",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=10, verbose_name="Цена"
+                    ),
+                ),
+                ("count", models.IntegerField(verbose_name="Количество")),
+                (
+                    "date",
+                    models.DateField(auto_now_add=True, verbose_name="Дата создания"),
+                ),
+                (
+                    "description",
+                    models.CharField(
+                        blank=True, max_length=64, verbose_name="Краткое описание"
+                    ),
+                ),
+                (
+                    "fullDescription",
+                    models.TextField(blank=True, verbose_name="Полное описание"),
+                ),
+                (
+                    "freeDelivery",
+                    models.BooleanField(
+                        default=False, verbose_name="Бесплатная доставка"
+                    ),
+                ),
+                ("rating", models.IntegerField(verbose_name="Количество звёзд")),
+                (
+                    "category",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="products",
+                        to="catalog_app.category",
+                        verbose_name="Категория",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Товар',
-                'verbose_name_plural': 'Товары',
-                'ordering': ('pk',),
+                "verbose_name": "Товар",
+                "verbose_name_plural": "Товары",
+                "ordering": ("pk",),
             },
         ),
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64, verbose_name='Название')),
-                ('product', models.ManyToManyField(related_name='tags', to='products_app.product', verbose_name='Товар')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="Название")),
+                (
+                    "product",
+                    models.ManyToManyField(
+                        related_name="tags",
+                        to="products_app.product",
+                        verbose_name="Товар",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Тег',
-                'verbose_name_plural': 'Теги',
-                'ordering': ('pk',),
+                "verbose_name": "Тег",
+                "verbose_name_plural": "Теги",
+                "ordering": ("pk",),
             },
         ),
         migrations.CreateModel(
-            name='SaleProduct',
+            name="SaleProduct",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('salePrice', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Цена со скидкой')),
-                ('dateFrom', models.DateField(auto_now_add=True, verbose_name='Дата начала акции')),
-                ('dateTo', models.DateField(blank=True, verbose_name='Дата окончании акции')),
-                ('product', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='sale', to='products_app.product', verbose_name='Товар')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "salePrice",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=10, verbose_name="Цена со скидкой"
+                    ),
+                ),
+                (
+                    "dateFrom",
+                    models.DateField(
+                        auto_now_add=True, verbose_name="Дата начала акции"
+                    ),
+                ),
+                (
+                    "dateTo",
+                    models.DateField(blank=True, verbose_name="Дата окончании акции"),
+                ),
+                (
+                    "product",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="sale",
+                        to="products_app.product",
+                        verbose_name="Товар",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Акция',
-                'verbose_name_plural': 'Акции',
-                'ordering': ('pk',),
+                "verbose_name": "Акция",
+                "verbose_name_plural": "Акции",
+                "ordering": ("pk",),
             },
         ),
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author', models.CharField(max_length=128, verbose_name='Автор')),
-                ('email', models.EmailField(max_length=64, verbose_name='Email-адрес')),
-                ('text', models.TextField(blank=True, default='', verbose_name='Отзыв')),
-                ('rate', models.IntegerField(verbose_name='Оценка')),
-                ('date', models.DateTimeField(auto_now_add=True, verbose_name='Дата написания')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='review', to='products_app.product', verbose_name='Товар')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("author", models.CharField(max_length=128, verbose_name="Автор")),
+                ("email", models.EmailField(max_length=64, verbose_name="Email-адрес")),
+                (
+                    "text",
+                    models.TextField(blank=True, default="", verbose_name="Отзыв"),
+                ),
+                ("rate", models.IntegerField(verbose_name="Оценка")),
+                (
+                    "date",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Дата написания"
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="review",
+                        to="products_app.product",
+                        verbose_name="Товар",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Отзыв',
-                'verbose_name_plural': 'Отзывы',
-                'ordering': ('pk',),
+                "verbose_name": "Отзыв",
+                "verbose_name_plural": "Отзывы",
+                "ordering": ("pk",),
             },
         ),
         migrations.CreateModel(
-            name='ProductSpecification',
+            name="ProductSpecification",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=128, verbose_name='Характеристика')),
-                ('value', models.CharField(max_length=256, verbose_name='Описание')),
-                ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='specification', to='products_app.product', verbose_name='Товар')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=128, verbose_name="Характеристика"),
+                ),
+                ("value", models.CharField(max_length=256, verbose_name="Описание")),
+                (
+                    "product",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="specification",
+                        to="products_app.product",
+                        verbose_name="Товар",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Техническая характеристика',
-                'verbose_name_plural': 'Технические характеристики',
-                'ordering': ('pk',),
+                "verbose_name": "Техническая характеристика",
+                "verbose_name_plural": "Технические характеристики",
+                "ordering": ("pk",),
             },
         ),
         migrations.CreateModel(
-            name='ProductImage',
+            name="ProductImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(default='', upload_to=products_app.models.product_path, verbose_name='Изображение')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_img', to='products_app.product', verbose_name='Товар')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(
+                        default="",
+                        upload_to=products_app.models.product_path,
+                        verbose_name="Изображение",
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="product_img",
+                        to="products_app.product",
+                        verbose_name="Товар",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Изображение товара',
-                'verbose_name_plural': 'Изображения товаров',
-                'ordering': ('pk',),
+                "verbose_name": "Изображение товара",
+                "verbose_name_plural": "Изображения товаров",
+                "ordering": ("pk",),
             },
         ),
     ]

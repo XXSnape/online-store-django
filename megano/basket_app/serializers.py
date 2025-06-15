@@ -7,6 +7,7 @@ class BasketSerializer(serializers.ModelSerializer):
     """
     Сериализатор корзины.
     """
+
     tags = TagSerializer(many=True, required=False)
     reviews = serializers.SerializerMethodField()
     count = serializers.SerializerMethodField()
@@ -15,8 +16,20 @@ class BasketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'category', 'price', 'count', 'date', 'title',
-                  'description', 'freeDelivery', 'images', 'tags', 'reviews', 'rating')
+        fields = (
+            "id",
+            "category",
+            "price",
+            "count",
+            "date",
+            "title",
+            "description",
+            "freeDelivery",
+            "images",
+            "tags",
+            "reviews",
+            "rating",
+        )
 
     def get_count(self, instance: Product) -> int:
         """
@@ -48,6 +61,7 @@ class BasketSerializer(serializers.ModelSerializer):
         :param instance: экземпляр модели Product
         :return: список из словарей, в которых содержится информация об изображениях товара.
         """
-        return [{'src': image.src(), 'alt': image.alt()}
-                for image in instance.product_img.all()]
-
+        return [
+            {"src": image.src(), "alt": image.alt()}
+            for image in instance.product_img.all()
+        ]
