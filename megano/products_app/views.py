@@ -30,7 +30,6 @@ class TagsListApiView(ListAPIView):
 
     def get(self, request: Request, *args, **kwargs):
         """Метод - get. Формирует ответ для пользователя"""
-        print("backs", list(self.filter_backends))
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
