@@ -1,9 +1,10 @@
-from rest_framework.generics import ListAPIView
-from rest_framework.views import APIView
-from rest_framework.request import Request
-from rest_framework.response import Response
 from products_app.models import Product
 from products_app.serializers import FewerInfoProductSerializer
+from rest_framework.generics import ListAPIView
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Category
 from .serializers import CategorySerializer
 from .utils import main_filter

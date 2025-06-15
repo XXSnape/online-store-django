@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import OrderApiView, OrderDetailApiView, PaymentApiView
 
+from .views import OrderApiView, OrderDetailApiView, PaymentApiView
 
 app_name = "orders_app"
 

@@ -1,7 +1,8 @@
-from rest_framework.exceptions import ValidationError
 from products_app.models import Product
-from .serializers import BasketSerializer
+from rest_framework.exceptions import ValidationError
+
 from .basket import Basket
+from .serializers import BasketSerializer
 
 
 def get_serialized_data(basket: Basket) -> BasketSerializer.data:

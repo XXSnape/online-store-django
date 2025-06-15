@@ -1,10 +1,12 @@
-from rest_framework.exceptions import ValidationError
-from django.contrib.auth.models import User
-from .models import ProfileUser
-from json import loads, JSONDecodeError
 import re
-from django.http.request import QueryDict
+from json import JSONDecodeError, loads
 from string import ascii_lowercase, ascii_uppercase, digits
+
+from django.contrib.auth.models import User
+from django.http.request import QueryDict
+from rest_framework.exceptions import ValidationError
+
+from .models import ProfileUser
 
 
 def validate_all_new_user_data(data: dict):

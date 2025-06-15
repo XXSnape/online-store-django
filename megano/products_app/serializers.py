@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from .models import Tag, Review, Product, SaleProduct
-from datetime import datetime
+
+from .models import Product, Review, SaleProduct, Tag
 
 
 class TagSerializer(serializers.ModelSerializer):

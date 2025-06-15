@@ -1,8 +1,9 @@
-from .models import ProfileUser, AvatarUser
-from rest_framework import serializers
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, update_session_auth_hash
+from django.contrib.auth.models import User
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+
+from .models import AvatarUser, ProfileUser
 from .utils import validate_password_user
 
 

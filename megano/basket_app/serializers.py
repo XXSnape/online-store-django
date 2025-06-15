@@ -1,6 +1,6 @@
-from rest_framework import serializers
 from products_app.models import Product
 from products_app.serializers import TagSerializer
+from rest_framework import serializers
 
 
 class BasketSerializer(serializers.ModelSerializer):

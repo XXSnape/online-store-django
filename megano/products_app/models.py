@@ -1,5 +1,5 @@
-from django.db import models
 from catalog_app.models import Category
+from django.db import models
 
 
 def product_path(instance: "ProductImage", filename: str) -> str:

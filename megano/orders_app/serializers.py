@@ -1,5 +1,6 @@
-from rest_framework import serializers
 from products_app.serializers import FewerInfoProductSerializer
+from rest_framework import serializers
+
 from .models import Order
 from .utils import get_nice_data
 

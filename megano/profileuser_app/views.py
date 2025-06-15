@@ -1,31 +1,31 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.request import Request
-from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LogoutView
+from django.urls import reverse_lazy
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import AvatarUser, ProfileUser
 from .serializers import (
-    ProfileUserSerializer,
-    UserSerializer,
     AuthUserSerializer,
     ChangePasswordUserSerializer,
+    ProfileUserSerializer,
+    UserSerializer,
 )
 from .utils import (
+    check_email_user_exists,
+    create_new_user,
+    create_profile_new_user,
     get_classic_dict,
     get_data_new_user,
     get_update_user_data,
+    validate_all_new_user_data,
+    validate_file,
     validate_fullname_user,
     validate_phone_user,
-    validate_all_new_user_data,
-    check_email_user_exists,
-    validate_file,
-    create_new_user,
-    create_profile_new_user,
 )
-
-from .models import ProfileUser, AvatarUser
-from django.contrib.auth.views import LogoutView
-from django.urls import reverse_lazy
-from rest_framework.permissions import IsAuthenticated
 
 
 class ProfileUserLogoutView(LogoutView):

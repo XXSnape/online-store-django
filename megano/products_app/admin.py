@@ -1,11 +1,12 @@
 from django.contrib import admin
+
 from .models import (
     Product,
     ProductImage,
     ProductSpecification,
+    Review,
     SaleProduct,
     Tag,
-    Review,
 )
 
 

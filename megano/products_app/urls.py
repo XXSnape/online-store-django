@@ -1,13 +1,13 @@
 from django.urls import path
+
 from .views import (
-    TagsListApiView,
+    CreateProductReviewApiView,
     ProductDetailApiView,
-    SaleListApiView,
     ProductLimitedListApiView,
     ProductPopularListApiView,
-    CreateProductReviewApiView,
+    SaleListApiView,
+    TagsListApiView,
 )
-
 
 app_name = "products_app"
 

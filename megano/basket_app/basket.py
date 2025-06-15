@@ -1,10 +1,10 @@
 from decimal import Decimal
 
 from django.core.exceptions import ObjectDoesNotExist
-
-from megano import settings
 from products_app.models import Product
 from rest_framework.request import Request
+
+from megano import settings
 
 
 class Basket:

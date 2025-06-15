@@ -1,9 +1,10 @@
-from rest_framework.exceptions import ValidationError
-from datetime import datetime
 import statistics
+from datetime import datetime
+
 from profileuser_app.models import ProfileUser
-from .models import Review
-from .models import Product
+from rest_framework.exceptions import ValidationError
+
+from .models import Product, Review
 
 
 def setup_average_rating(product_pk: Product.pk) -> int:

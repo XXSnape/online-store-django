@@ -1,7 +1,7 @@
 from django.db.models import Count
+from django.db.models.query import QuerySet
 from products_app.models import Product
 from rest_framework.request import Request
-from django.db.models.query import QuerySet
 
 
 def get_query_params(request: Request) -> tuple:

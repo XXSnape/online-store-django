@@ -1,12 +1,14 @@
-from rest_framework.exceptions import ValidationError
-from rest_framework.request import Request
-from django.db.models.query import QuerySet
+from datetime import datetime
+from decimal import Decimal
+
 from basket_app.basket import Basket
+from django.db.models.query import QuerySet
 from products_app.models import Product
 from profileuser_app.utils import validate_fullname_user
+from rest_framework.exceptions import ValidationError
+from rest_framework.request import Request
+
 from .models import Order, QuantityProductsInBasket
-from decimal import Decimal
-from datetime import datetime
 
 
 def get_nice_data(date: datetime) -> str:

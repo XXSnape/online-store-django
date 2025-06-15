@@ -1,15 +1,13 @@
 from django.urls import path
 
-
 from .views import (
-    SignInApiView,
-    ProfileDetailUpdateApiView,
     AvatarUserCreateOrUpdateApiView,
-    ProfileUserLogoutView,
-    UserSignUpApiView,
     ChangePasswordUserApiView,
+    ProfileDetailUpdateApiView,
+    ProfileUserLogoutView,
+    SignInApiView,
+    UserSignUpApiView,
 )
-
 
 app_name = "profileuser_app"
 

@@ -1,25 +1,25 @@
+from django.db.models import Count
+from profileuser_app.models import ProfileUser
+from rest_framework import status
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
-from .models import Tag, Product, SaleProduct
-from django.db.models import Count
-from .serializers import (
-    TagSerializer,
-    ReviewSerializer,
-    ProductDetailSerializer,
-    SaleProductSerializer,
-    FewerInfoProductSerializer,
-)
 
-from profileuser_app.models import ProfileUser
+from .models import Product, SaleProduct, Tag
+from .serializers import (
+    FewerInfoProductSerializer,
+    ProductDetailSerializer,
+    ReviewSerializer,
+    SaleProductSerializer,
+    TagSerializer,
+)
 from .utils import (
-    setup_average_rating,
-    get_valid_review_data,
     create_review,
+    get_valid_review_data,
+    setup_average_rating,
     user_review_exists,
 )
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
 
 
 class TagsListApiView(ListAPIView):

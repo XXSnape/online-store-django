@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import ProfileUser, AvatarUser
+
+from .models import AvatarUser, ProfileUser
 
 
 class ProfileUserInline(admin.StackedInline):

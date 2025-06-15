@@ -1,22 +1,23 @@
-from rest_framework.request import Request
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
 from basket_app.basket import Basket
 from products_app.models import Product
 from profileuser_app.models import ProfileUser
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .models import Order
 from .serializers import OrderSerializer
 from .utils import (
-    get_order_user_or_400,
+    check_delivery_type_and_price_setting,
     get_detail_order_data,
     get_detail_payment_data,
-    save_number_products_in_basket,
-    setup_order,
-    setup_count_products_in_basket,
+    get_order_user_or_400,
     remove_goods_from_warehouse,
-    check_delivery_type_and_price_setting,
+    save_number_products_in_basket,
+    setup_count_products_in_basket,
+    setup_order,
     validation_all_data,
 )
 

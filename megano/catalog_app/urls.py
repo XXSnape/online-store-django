@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import CategoryListApiView, BannersListApiView, CatalogApiView
+
+from .views import BannersListApiView, CatalogApiView, CategoryListApiView
 
 app_name = "catalog_app"
 

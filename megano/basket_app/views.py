@@ -1,10 +1,11 @@
-from rest_framework.views import APIView
+from products_app.models import Product
+from rest_framework.generics import get_object_or_404
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.generics import get_object_or_404
-from products_app.models import Product
+from rest_framework.views import APIView
+
 from .basket import Basket
-from .utils import get_serialized_data, check_user_input_count
+from .utils import check_user_input_count, get_serialized_data
 
 
 class BasketApiView(APIView):
