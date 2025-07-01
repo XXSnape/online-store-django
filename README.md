@@ -42,17 +42,12 @@ git clone https://github.com/XXSnape/online-store-django.git
 pip install -r requirements.txt
 ```
 
-3) Установка пакета для работы frontend - составляющей:
-```commandline
-cd diploma-frontend && pip install ./dist/diploma-frontend-0.6.tar.gz
-```
-
-4) Выполнение миграций для работы с базой данных:
+3) Выполнение миграций для работы с базой данных:
 ```commandline
 cd ../megano && python manage.py migrate
 ``` 
 
-5) При желании можно наполнить базу данных тестовыми данными: 
+4) При желании можно наполнить базу данных тестовыми данными: 
 ```commandline
 python manage.py loaddata fixtures/*.json
 ```
