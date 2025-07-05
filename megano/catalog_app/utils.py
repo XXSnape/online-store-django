@@ -49,10 +49,12 @@ def filter_category(category: list[str], products: QuerySet):
     """
     if len(category) == 2:
         return products.filter(category__title=" ".join(category[-1].split("%20")))
-
-    path, digit = category[0].split("catalog/")
-    if digit:
-        return products.filter(category__id=int(digit[:-1]))
+    try:
+        path, digit = category[0].split("catalog/")
+        if digit:
+            return products.filter(category__id=int(digit[:-1]))
+    except ValueError:
+        pass
     return products
 
 
